@@ -4,7 +4,6 @@ import "github.com/EvertonTomalok/ports-challenge/internal/domain"
 
 type Service interface {
 	Upsert(ports domain.PortData) error
-	Get(key string) (domain.Port, bool)
 }
 
 type service struct {
@@ -26,8 +25,4 @@ func (s *service) Upsert(ports domain.PortData) error {
 	}
 
 	return nil
-}
-
-func (s *service) Get(key string) (domain.Port, bool) {
-	return s.repository.Get(key)
 }
