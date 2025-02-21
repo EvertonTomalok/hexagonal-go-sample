@@ -37,4 +37,4 @@ Given that input items arrives in chunks, I would implement a worker pool patter
 Using an in-memory map is not the best approach for a production environment. Here are some alternatives:
 
 - A memory-based database like Redis could be a great first choice for storing key-value pairs, providing fast and efficient read access.
-- If persistence and optimized read performance become important in the future, implementing a pattern like CQRS (Command Query Responsibility Segregation) would be beneficial. In this case, I would use a SQL database like PostgreSQL for writes, Elasticsearch as a read-optimized database, and Kafka as an event bus to ensure data written to PostgreSQL is replicated in Elasticsearch.
+- If persistence and optimized read performance become important in the future, implementing a pattern like CQRS (Command Query Responsibility Segregation) would be beneficial. In this case, I would use a database like MongoDB (since it is a document based) for writes, Elasticsearch as a read-optimized database, and Kafka as an event bus to ensure data written to PostgreSQL is replicated in Elasticsearch.
