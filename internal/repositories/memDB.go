@@ -1,24 +1,8 @@
 package repositories
 
 import (
-	"errors"
-
 	"github.com/EvertonTomalok/ports-challenge/internal/domain"
 )
-
-var MaxSizeAchieveErr = errors.New("max size achieved")
-
-type Option func(*config)
-
-func WithMaxSize(len int) Option {
-	return func(c *config) {
-		c.maxLen = len
-	}
-}
-
-type config struct {
-	maxLen int
-}
 
 func NewMemDB(options ...Option) *memDB {
 	config := &config{maxLen: 1048576} // default max len is 2 ** 20
@@ -27,7 +11,6 @@ func NewMemDB(options ...Option) *memDB {
 	}
 
 	db := &memDB{data: make(map[string]domain.Port), maxSize: config.maxLen}
-
 	return db
 }
 
@@ -44,7 +27,7 @@ func (repo *memDB) Upsert(key string, value domain.Port) error {
 	if len(repo.data) == repo.maxSize {
 		_, found := repo.Get(key)
 		if !found {
-			return MaxSizeAchieveErr
+			return MaxSizeAchievedErr
 		}
 	}
 

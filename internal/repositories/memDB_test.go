@@ -78,9 +78,11 @@ func Test_MemDB_Limits(t *testing.T) {
 				return
 			}
 			err = memDB.Upsert(test.key, portData)
-			assert.Equal(t, test.mustFail, err != nil)
 			if test.mustFail {
-				assert.ErrorIs(t, err, MaxSizeAchieveErr)
+				assert.NotNil(t, err)
+				assert.ErrorIs(t, err, MaxSizeAchievedErr)
+			} else {
+				assert.Nil(t, err)
 			}
 		})
 	}
