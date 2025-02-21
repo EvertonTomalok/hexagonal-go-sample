@@ -11,6 +11,7 @@ import (
 const jsonFixturePath = "./fixtures/dummy_data.json"
 
 func Test_JsonHandlerWithoutRepositoryLimiter(t *testing.T) {
+	// no size limit is set, it will use the default one (very large number 2 ** 20)
 	repo := repositories.NewMemDB()
 	fakeSvc := ports.NewService(repo)
 	fakeActor := NewJsonActor(fakeSvc)
@@ -29,6 +30,8 @@ func Test_JsonHandlerWithoutRepositoryLimiter(t *testing.T) {
 }
 
 func Test_JsonHandlerWithRepositoryLimiter(t *testing.T) {
+	// notice the max size for the database is set to 1, so it will
+	// overwrite the default value. Only 1 item will be stored.
 	repo := repositories.NewMemDB(repositories.WithMaxSize(1))
 	fakeSvc := ports.NewService(repo)
 	fakeActor := NewJsonActor(fakeSvc)
