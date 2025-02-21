@@ -14,28 +14,33 @@ func NewMemDB(options ...Option) *memDB {
 	return db
 }
 
-// In memory map struct database
+// In memory map struct database with a maxSize attribute to control
+// max size of the database.
 type memDB struct {
 	data    domain.PortData
 	maxSize int
 }
 
 // Upsert the database ports collection.
-func (repo *memDB) Upsert(key string, value domain.Port) error {
-	// if value is not present on map but max size was achieve, it will
+func (db *memDB) Upsert(key string, value domain.Port) error {
+	// if value is not present on the map but max size was achieve, it will
 	// return error
-	if len(repo.data) == repo.maxSize {
-		_, found := repo.Get(key)
+	if len(db.data) == db.maxSize {
+		_, found := db.Get(key)
 		if !found {
 			return MaxSizeAchievedErr
 		}
 	}
 
-	repo.data[key] = value
+	db.data[key] = value
 	return nil
 }
 
-func (repo *memDB) Get(key string) (domain.Port, bool) {
-	item, found := repo.data[key]
+func (db *memDB) Get(key string) (domain.Port, bool) {
+	item, found := db.data[key]
 	return item, found
+}
+
+func (db *memDB) Size() int {
+	return len(db.data)
 }
