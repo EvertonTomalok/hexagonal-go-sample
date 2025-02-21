@@ -12,3 +12,5 @@ type Port struct {
 	Unlocs      []string  `json:"unlocs"`
 	Code        string    `json:"code,omitempty"`
 }
+
+type PortData map[string]Port
