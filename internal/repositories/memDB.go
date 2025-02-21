@@ -16,7 +16,7 @@ func NewMemDB(options ...Option) *memDB {
 
 // In memory map struct database
 type memDB struct {
-	data    map[string]domain.Port
+	data    domain.PortData
 	maxSize int
 }
 
