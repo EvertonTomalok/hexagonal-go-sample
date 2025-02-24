@@ -36,6 +36,7 @@ This project also contains a Makefile with some receipts to help developers
 - `make lint`: will run lint locally
 - `make format`: will run formatter locally
 - `make unit-test`: will run unit tests locally 
+- `mock-gen`: will generate/update mocks
 
 # Post notes and possible enhancements
 
