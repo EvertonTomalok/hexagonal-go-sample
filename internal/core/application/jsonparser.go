@@ -1,30 +1,29 @@
-package port_actor
+package application
 
 import (
 	"encoding/json"
 	"fmt"
 	"os"
 
-	"github.com/EvertonTomalok/ports-challenge/internal/domain"
+	"github.com/EvertonTomalok/ports-challenge/internal/core/domain"
 	"github.com/EvertonTomalok/ports-challenge/internal/ports"
 )
 
-type JsonActor struct {
+type JsonParser struct {
 	service ports.Service
 }
 
-func NewJsonActor(service ports.Service) *JsonActor {
-	return &JsonActor{
+func NewJsonParser(service ports.Service) *JsonParser {
+	return &JsonParser{
 		service: service,
 	}
 }
 
-// HandleUpsertStream process the JSON file line by line and performs
-// an upsert call for each item found.
-// Since the file receive is too large, instead of reading the whole document,
-// we will "paginate" the file and return a json node every time it's found, one by one
-// by all the nodes are parsed.
-func (actor *JsonActor) HandleUpsertStream(filePath string) error {
+// ParseAndUpsertFile processes the JSON file line by line, performing an upsert operation
+// for each item encountered. Given the file's large size, instead of loading the entire
+// document at once, it will be processed in a paginated manner, returning each JSON node
+// individually as it is found until all nodes have been parsed.
+func (parser *JsonParser) ParseAndUpsertFile(filePath string) error {
 	file, err := os.Open(filePath)
 	if err != nil {
 		return fmt.Errorf("couldn't open file: %v\n", err)
@@ -57,7 +56,7 @@ func (actor *JsonActor) HandleUpsertStream(filePath string) error {
 		portData := domain.PortData{
 			key: value,
 		}
-		if err := actor.service.Upsert(portData); err != nil {
+		if err := parser.service.Upsert(portData); err != nil {
 			return err
 		}
 	}

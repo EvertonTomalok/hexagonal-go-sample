@@ -10,7 +10,7 @@ type Port struct {
 	Province    string    `json:"province"`
 	Timezone    string    `json:"timezone"`
 	Unlocs      []string  `json:"unlocs"`
-	Code        string    `json:"code,omitempty"`
+	Code        string    `json:"code"`
 }
 
 type PortData map[string]Port

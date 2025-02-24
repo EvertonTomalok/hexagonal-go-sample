@@ -6,9 +6,9 @@ import (
 	"os/signal"
 	"syscall"
 
-	port_actor "github.com/EvertonTomalok/ports-challenge/internal/handlers/port_actors"
-	"github.com/EvertonTomalok/ports-challenge/internal/ports"
-	"github.com/EvertonTomalok/ports-challenge/internal/repositories"
+	"github.com/EvertonTomalok/ports-challenge/internal/adapters/infra"
+	"github.com/EvertonTomalok/ports-challenge/internal/adapters/services"
+	"github.com/EvertonTomalok/ports-challenge/internal/core/application"
 )
 
 func main() {
@@ -23,13 +23,13 @@ func main() {
 	signal.Notify(shutdown, syscall.SIGTERM, syscall.SIGINT)
 
 	// Setting up the injection dependencies
-	portsRepository := repositories.NewMemDB()
-	portsService := ports.NewService(portsRepository)
-	portsHandler := port_actor.NewJsonActor(portsService)
+	portsRepository := infra.NewMemDB()
+	portsService := services.NewService(portsRepository)
+	portsHandler := application.NewJsonParser(portsService)
 
 	go func() {
 		// Handle input json file
-		err := portsHandler.HandleUpsertStream(filePath)
+		err := portsHandler.ParseAndUpsertFile(filePath)
 		if err != nil {
 			fmt.Println(err)
 		}

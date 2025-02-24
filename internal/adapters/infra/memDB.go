@@ -1,7 +1,7 @@
-package repositories
+package infra
 
 import (
-	"github.com/EvertonTomalok/ports-challenge/internal/domain"
+	"github.com/EvertonTomalok/ports-challenge/internal/core/domain"
 )
 
 func NewMemDB(options ...Option) *memDB {

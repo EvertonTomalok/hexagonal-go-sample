@@ -1,4 +1,4 @@
-package repositories
+package infra
 
 type config struct {
 	maxLen int

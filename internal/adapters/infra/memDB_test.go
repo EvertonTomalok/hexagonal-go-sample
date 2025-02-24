@@ -1,10 +1,10 @@
-package repositories
+package infra
 
 import (
 	"encoding/json"
 	"testing"
 
-	"github.com/EvertonTomalok/ports-challenge/internal/domain"
+	"github.com/EvertonTomalok/ports-challenge/internal/core/domain"
 	"github.com/stretchr/testify/assert"
 )
 

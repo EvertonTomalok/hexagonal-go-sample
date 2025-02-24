@@ -2,6 +2,21 @@
 
 This repository contains an application that is able to parse a huge JSON file, parse this file node by node and upsert it in a Memory Database (a map was used here as the repository).
 
+# Architecture
+
+This application follows the Hexagonal Architecture to structure and organize the code efficiently:
+
+- Domain (Entities) – Defines the core business logic, remaining independent of frameworks, databases, or external APIs.
+
+- Application (Use Cases) – Orchestrates business logic, ensuring separation between application workflows and infrastructure/services.
+
+- Ports (Interfaces) – Serve as the entry and exit points to the core logic, using interfaces to abstract external dependencies.
+
+- Adapters (Implementations of Ports) – Bridge the domain with real-world assets by implementing the necessary interfaces.
+
+Additionally, the project includes instructions for the repository and service layers.
+
+
 # How to execute
 
 This project has a dockerfile containing a multi stage file that allows to run and test the project.
