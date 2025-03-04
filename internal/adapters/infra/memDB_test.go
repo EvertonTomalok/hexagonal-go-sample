@@ -68,6 +68,12 @@ func Test_MemDB_Limits(t *testing.T) {
 			key:      "AEAUH",
 			mustFail: true,
 		},
+		{
+			testName: "third insert must work since it's an update",
+			portRaw:  `{"name":"Ajman","city":"Ajman","country":"United Arab Emirates","alias":["alias"],"regions":[],"coordinates":[55.5136433,25.4052165],"province":"Ajman","timezone":"Asia/Dubai","unlocs":["AEAJM"],"code":"52000"}`,
+			key:      "AEAJM",
+			mustFail: false,
+		},
 	}
 
 	for _, test := range testCases {
