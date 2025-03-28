@@ -72,11 +72,11 @@ func (db *postgresDB) Get(key string) (domain.Port, bool) {
 	var port domain.Port
 	query := `
 		SELECT
-			name, city, country, province, timezone, code, alias, regions, coordinates, unlocs
+			identifier, name, city, country, province, timezone, code, alias, regions, coordinates, unlocs
 		FROM
 			ports
 		WHERE
-			code = $1;
+			identifier = $1;
 	`
 
 	// Execute the query and scan the result into the Port struct
@@ -84,19 +84,21 @@ func (db *postgresDB) Get(key string) (domain.Port, bool) {
 
 	// If the result is found, fill the struct
 	err := row.Scan(
+		&port.Identifier,
 		&port.Name,
 		&port.City,
 		&port.Country,
 		&port.Province,
 		&port.Timezone,
 		&port.Code,
-		&port.Alias,
-		&port.Regions,
-		&port.Coordinates,
-		&port.Unlocs,
+		pq.Array(&port.Alias),       // Scan the alias array
+		pq.Array(&port.Regions),     // Scan the regions array
+		pq.Array(&port.Coordinates), // Scan the coordinates array
+		pq.Array(&port.Unlocs),      // Scan the unlocs array
 	)
 
 	if err != nil {
+		fmt.Printf("%+v\n", err)
 		if err == sql.ErrNoRows {
 			return port, false
 		}

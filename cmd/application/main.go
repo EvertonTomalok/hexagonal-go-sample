@@ -36,6 +36,12 @@ func main() {
 		}
 
 		fmt.Printf("Number of registries added to db: %d \n", portsRepository.Size())
+		item, found := portsRepository.Get("AEAJM")
+		if !found {
+			fmt.Println("AEAJM not found")
+			return
+		}
+		fmt.Printf("AEAJM found -> %+v \n", item)
 	}()
 
 	<-shutdown
