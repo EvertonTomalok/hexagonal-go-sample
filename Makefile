@@ -1,5 +1,9 @@
 include .local_env
 
+.PHONY: run-local
+run-local:
+	@export DATABASE_URL="postgres://admin:admin@localhost:5432/ports?sslmode=disable" && go run cmd/application/main.go ./resources/ports.json 
+
 .PHONY: install-migrate
 install-migrate:
 	@chmod +x ./scripts/install_migrate.sh && ./scripts/install_migrate.sh
@@ -39,3 +43,11 @@ migrate-up:
 .PHONY: migrate-down
 migrate-down:
 	migrate -path=migrations/postgres -database "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}?sslmode=disable" -verbose down
+
+.PHONY: database-up
+database-up:
+	docker-compose up -d
+
+.PHONY: database-down
+database-down:
+	docker-compose down
