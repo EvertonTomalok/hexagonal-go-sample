@@ -1,0 +1,14 @@
+version: "3.3"
+
+services:
+    # Start local Postgres
+    database:
+        image: "postgres:14.8-alpine"
+        ports:
+            - "5432:5432"
+        environment:
+            - POSTGRES_USER=admin
+            - POSTGRES_PASSWORD=admin
+            - POSTGRES_DB=ports
+        volumes:
+            - "./.postgres-data/db:/var/lib/postgresql"
