@@ -46,8 +46,12 @@ migrate-down:
 
 .PHONY: database-up
 database-up:
-	docker-compose up -d
+	docker-compose up database -d
 
 .PHONY: database-down
 database-down:
 	docker-compose down
+
+.PHONY: up
+up:
+	docker-compose up app

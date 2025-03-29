@@ -25,7 +25,4 @@ FROM alpine:3.21 AS release
 COPY --from=compiler /bin/app /bin/app
 COPY ./resources/ports.json ./
 
-COPY .local_env /etc/.local_env
-RUN set -o allexport; source /etc/.local_env; set +o allexport
-
 CMD ["/bin/app", "./ports.json"]
