@@ -21,8 +21,12 @@ Additionally, the project includes instructions for the repository and service l
 
 This project has a dockerfile containing a multi stage file that allows to run and test the project.
 
+First, run: `database-up` to setup postgresDB, and then `make setup-dev && migrate-up` to run migrations
+PS: run `database-down` to remove postgresDB
+
 Running the application:
-- `docker run $(docker build -q .)`
+- In your machine: `make run-local`
+- In docker: `make up` or `docker-compose up app`
 
 Testing:
 - `docker run $(docker build --target testing -q .)`

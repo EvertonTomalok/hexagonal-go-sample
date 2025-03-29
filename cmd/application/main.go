@@ -23,7 +23,8 @@ func main() {
 	signal.Notify(shutdown, syscall.SIGTERM, syscall.SIGINT)
 
 	// Setting up the injection dependencies
-	portsRepository := infra.NewMemDB()
+	portsRepository := infra.NewPostgresDB()
+	// portsRepository := infra.NewMemDB()
 	portsService := services.NewService(portsRepository)
 	portsHandler := application.NewJsonParser(portsService)
 
@@ -34,7 +35,13 @@ func main() {
 			fmt.Println(err)
 		}
 
-		fmt.Printf("Number of registries added to memDB: %d \n", portsRepository.Size())
+		fmt.Printf("Number of registries added to db: %d \n", portsRepository.Size())
+		item, found := portsRepository.Get("AEAJM")
+		if !found {
+			fmt.Println("AEAJM not found")
+			return
+		}
+		fmt.Printf("AEAJM found -> %+v \n", item)
 	}()
 
 	<-shutdown

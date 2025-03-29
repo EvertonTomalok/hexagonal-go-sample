@@ -1,3 +1,4 @@
 # This file helps docker to ignore files containing potential secret information
 .env
 .aws
+.postgres-data

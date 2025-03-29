@@ -22,22 +22,22 @@ type memDB struct {
 }
 
 // Upsert the database ports collection.
-func (db *memDB) Upsert(key string, value domain.Port) error {
-	// if value is not present on the map but max size was achieve, it will
+func (db *memDB) Upsert(identifier string, port domain.Port) error {
+	// if port is not present on the map but max size was achieve, it will
 	// return error
 	if len(db.data) == db.maxSize {
-		_, found := db.Get(key)
+		_, found := db.Get(identifier)
 		if !found {
 			return MaxSizeAchievedErr
 		}
 	}
-
-	db.data[key] = value
+	port.Identifier = identifier
+	db.data[identifier] = port
 	return nil
 }
 
-func (db *memDB) Get(key string) (domain.Port, bool) {
-	item, found := db.data[key]
+func (db *memDB) Get(identifier string) (domain.Port, bool) {
+	item, found := db.data[identifier]
 	return item, found
 }
 
